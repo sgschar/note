@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 // import { Observable} from 'rxjs/Observable';
-import { Observable } from 'rxjs';
+import { Observable,throwError,of  } from 'rxjs';
 // import { from } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +16,31 @@ export class UserService {
     console.log(Observable);
 
    }
-  // getData(){
-  //   return this.data = new  Observable(obs=>{
-  //     obs.next(2);
-  //     obs.next(3);
-  //     obs.error("err");
-  //   })
+  getData(){
+    return this.data = new  Observable(obs=>{
+      obs.next(2);
+      obs.next(3);
+      obs.error("err");
+    })
     
-  // }
- 
-  getUsers (): Observable<any>{
-    return this.http.get("https://jsonplaceholder.typicode.com/users")
-                    .pipe(catchError(this.handleError('getUser',[])));
+  }
+  getTextFile(filename: string) {
+    // The Observable returned by get() is of type Observable<string>
+    // because a text response was specified.
+    // There's no need to pass a <string> type parameter to get().
+    return this.http.get("filename", {responseType: 'text'})
+      .pipe(
+        tap( // Log the result or error
+          data => console.log(data),
+          error => console.log(filename, error)
+        )
+      );
+  }
+ // HttpClient.get() 会返回一个 HttpResponse 类型的 Observable
+  getUsers (){
+    return this.http.get("http://localhost/server/user/5_user_list.php")
+                    .pipe(retry(2),catchError(this.handleError('getUser',[])));
+  
   }
 
   /**

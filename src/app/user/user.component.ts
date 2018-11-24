@@ -20,8 +20,9 @@ export class UserComponent implements OnInit {
     // })
     this.userService.getUsers().subscribe(data=>{
       console.log(data);
-      console.log(1);
-
+    })
+    this.userService.getTextFile('D:\\projectWeb\\note\\src\\assets\\text.txt').subscribe(data=>{
+      console.log(data);
     })
   }
 

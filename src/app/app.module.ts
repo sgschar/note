@@ -7,18 +7,13 @@ import { AppComponent } from './app.component';
 import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
 
-import {UserComponent} from './user/user.component';
-
 import {MatTabsModule} from '@angular/material/tabs';
-
 
 @NgModule({
 
   // （可声明对象表） —— 那些属于本 NgModule 的组件、指令、管道
   declarations: [
     AppComponent,
-    UserComponent
-
   ],
 
   //（导入表） —— 那些导出了本模块中的组件模板所需的类的其它模块
